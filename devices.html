@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html class="" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>IoT Dashboard - Control de Sistemas</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<!-- Tailwind removed: using pure CSS in assets/css/devices.css -->
+<link rel="stylesheet" href="assets/css/devices.css"/>
+</head>
+<body>
+<div class="app-root">
+<aside class="sidebar">
+<div class="flex flex-col gap-4 mb-8">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Company Logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCT4HRjq1HodxrZMYSxP6S_2upZugO-RNXda9jomiJJilPZKz7TXe8uyYJU_EsQc02xPiPTBFHYDu3wS-AllTQwTGEIVbXiN4XecAht_rkzx0QFLeSR0oXs3-DmP5jMyWdsSsVx8hO8QI8U8ouqQujkD0QoAoBIySf1utoFOi__LHI11QACxYRVaJrpmukp7Doj8XVrHeCYjaR_kNNPAQnqX-GvWEokXYV1sMvvlHWly0QKaOVWG08ZDn_1k2naDohO9F4QjDnjd8OQ");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-medium leading-normal font-display">IoT Service</h1>
+<p class="text-[#92adc9] text-sm font-normal leading-normal font-display">Real-Time Monitoring</p>
+</div>
+</div>
+</div>
+<nav>
+<a class="sidebar-link" href="index.html">
+<span class="material-symbols-outlined text-white text-[24px]">query_stats</span>
+<p class="text-white text-sm font-medium leading-normal font-display">Dashboard</p>
+</a>
+<a class="sidebar-link active" href="devices.html">
+<span class="material-symbols-outlined text-white text-[24px]">devices</span>
+<p class="text-white text-sm font-medium leading-normal font-display">Devices</p>
+</a>
+<a class="sidebar-link" href="#">
+<span class="material-symbols-outlined text-white text-[24px]">notifications</span>
+<p class="text-white text-sm font-medium leading-normal font-display">Alerts</p>
+</a>
+<a class="sidebar-link" href="#">
+<span class="material-symbols-outlined text-white text-[24px]">assessment</span>
+<p class="text-white text-sm font-medium leading-normal font-display">Reports</p>
+</a>
+<a class="sidebar-link" href="#">
+<span class="material-symbols-outlined text-white text-[24px]">settings</span>
+<p class="text-white text-sm font-medium leading-normal font-display">Settings</p>
+</a>
+</nav>
+<div class="sidebar-bottom">
+<a class="sidebar-link" href="#">
+<span class="material-symbols-outlined text-white text-[24px]">help</span>
+<p class="text-white text-sm font-medium leading-normal font-display">Support</p>
+</a>
+<a class="sidebar-link" href="#">
+<span class="material-symbols-outlined text-white text-[24px]">logout</span>
+<p class="text-white text-sm font-medium leading-normal font-display">Log out</p>
+</a>
+</div>
+</aside>
+<main>
+<div class="layout-container flex h-full grow flex-col">
+<header>
+<div class="flex items-center gap-4 text-slate-800 dark:text-white">
+<span class="material-symbols-outlined text-3xl text-primary">
+                        data_object
+                    </span>
+<h2 class="text-slate-800 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">IoT Dashboard</h2>
+</div>
+<div class="flex flex-1 justify-end gap-4">
+<label class="hidden md:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-slate-400 dark:text-slate-400 flex border-none bg-slate-200 dark:bg-white/5 items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-800 dark:text-white focus:outline-0 focus:ring-0 border-none bg-slate-200 dark:bg-white/5 focus:border-none h-full placeholder:text-slate-400 dark:placeholder:text-slate-400 px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal" placeholder="Buscar dispositivo..." value=""/>
+</div>
+</label>
+<div class="flex gap-2">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 aspect-square bg-slate-200 dark:bg-white/5 text-slate-800 dark:text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 aspect-square bg-slate-200 dark:bg-white/5 text-slate-800 dark:text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDW39PhSayzd6KMs9tiZF9OEcd4wmp8MOPyjkTP9EzFO_Uz8rWljj_vabML0sY2LyYQG-tq3z7mTF5h72cKpdm4ALYSsgKD2IaYlD-YF8ZYO2ltBPp1IITKsSw1Sdi-9wwvvnGvHauJ1G3UubpzLmoQfB6khGeDlYLpMpz6oWtutrt-WHcK9Dh4QKtnvk_BTEAbwcdPAKaMQsrhRGHa6-LwscJJO3ASFaY6cSBci5nuohtqpCegI5-pR_f-oVly4wgH87O9Myai4rs5");'></div>
+</div>
+</header>
+<div class="page-inner">
+<div class="layout-content-container flex flex-col w-full flex-1">
+<div class="page-header">
+<h1 class="text-slate-800 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">Sistemas y Dispositivos</h1>
+<div class="segmented">
+<a class="segmented-tab" href="index.html">
+<span>Vista General</span>
+</a>
+<a class="segmented-tab active" href="devices.html">
+<span class="material-symbols-outlined">tune</span>
+<span>Control</span>
+</a>
+</div>
+</div>
+<div class="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-6 p-4">
+<div class="flex flex-col gap-4 p-5 bg-white dark:bg-white/5 rounded-xl shadow-sm hover:shadow-lg hover:dark:shadow-primary/20 transition-shadow duration-300">
+<div class="flex items-center justify-between">
+<p class="text-slate-800 dark:text-white text-lg font-bold">Iluminación Salón</p>
+<div class="flex items-center gap-2">
+<div class="size-2.5 rounded-full bg-green-500"></div>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Online</p>
+</div>
+</div>
+<div class="flex items-center justify-between gap-4">
+<div class="text-slate-600 dark:text-slate-300">
+<p class="text-3xl font-bold">75%</p>
+<p class="text-sm">Brillo</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex-1 flex items-center justify-center gap-2 h-10 px-4 bg-primary text-white rounded-lg text-sm font-bold">
+<span class="material-symbols-outlined">light_mode</span>
+</button>
+<button class="flex-1 flex items-center justify-center gap-2 h-10 px-4 bg-slate-200 dark:bg-white/10 text-slate-800 dark:text-white rounded-lg text-sm font-bold">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col gap-2 mt-2">
+<label class="text-slate-500 dark:text-slate-400 text-sm" for="brightness-slider">Ajustar Brillo</label>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400">brightness_low</span>
+<input class="w-full h-2 bg-slate-200 dark:bg-white/10 rounded-lg appearance-none cursor-pointer range-lg accent-primary" id="brightness-slider" max="100" min="0" type="range" value="75"/>
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400">brightness_high</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-4 p-5 bg-white dark:bg-white/5 rounded-xl shadow-sm hover:shadow-lg hover:dark:shadow-primary/20 transition-shadow duration-300">
+<div class="flex items-center justify-between">
+<p class="text-slate-800 dark:text-white text-lg font-bold">Climatización Oficina</p>
+<div class="flex items-center gap-2">
+<div class="size-2.5 rounded-full bg-green-500"></div>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Online</p>
+</div>
+</div>
+<div class="flex items-baseline gap-6 text-slate-600 dark:text-slate-300">
+<div>
+<p class="text-3xl font-bold">22°C</p>
+<p class="text-sm">Temperatura</p>
+</div>
+<div>
+<p class="text-3xl font-bold">45%</p>
+<p class="text-sm">Humedad</p>
+</div>
+</div>
+<div class="flex flex-col gap-2 mt-2">
+<label class="text-slate-500 dark:text-slate-400 text-sm" for="temp-slider">Ajustar Temperatura</label>
+<div class="flex items-center gap-3">
+<button class="flex items-center justify-center h-10 w-10 bg-slate-200 dark:bg-white/10 text-slate-800 dark:text-white rounded-lg">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<input class="w-full h-2 bg-slate-200 dark:bg-white/10 rounded-lg appearance-none cursor-pointer range-lg accent-primary" id="temp-slider" max="30" min="16" type="range" value="22"/>
+<button class="flex items-center justify-center h-10 w-10 bg-slate-200 dark:bg-white/10 text-slate-800 dark:text-white rounded-lg">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-4 p-5 bg-white dark:bg-white/5 rounded-xl shadow-sm hover:shadow-lg hover:dark:shadow-primary/20 transition-shadow duration-300">
+<div class="flex items-center justify-between">
+<p class="text-slate-800 dark:text-white text-lg font-bold">Seguridad Entrada</p>
+<div class="flex items-center gap-2">
+<div class="size-2.5 rounded-full bg-red-500"></div>
+<p class="text-red-500 text-sm">Desarmado</p>
+</div>
+</div>
+<div class="text-slate-600 dark:text-slate-300">
+<p class="text-3xl font-bold">Inactivo</p>
+<p class="text-sm">Sistema de seguridad listo</p>
+</div>
+<div class="flex items-center gap-3 mt-2">
+<button class="flex-1 flex items-center justify-center gap-2 h-10 px-4 bg-primary text-white rounded-lg text-sm font-bold">
+<span class="material-symbols-outlined">shield</span>
+<span>Armar Sistema</span>
+</button>
+<button class="flex items-center justify-center h-10 w-10 bg-slate-200 dark:bg-white/10 text-slate-800 dark:text-white rounded-lg">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col gap-4 p-5 bg-white dark:bg-white/5 rounded-xl shadow-sm hover:shadow-lg hover:dark:shadow-primary/20 transition-shadow duration-300">
+<div class="flex items-center justify-between">
+<p class="text-slate-800 dark:text-white text-lg font-bold">Riego Jardín</p>
+<div class="flex items-center gap-2">
+<div class="size-2.5 rounded-full bg-green-500"></div>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Online</p>
+</div>
+</div>
+<div class="text-slate-600 dark:text-slate-300">
+<p class="text-3xl font-bold">Inactivo</p>
+<p class="text-sm">Próximo riego: 18:00h</p>
+</div>
+<div class="flex items-center gap-3 mt-2">
+<button class="flex-1 flex items-center justify-center gap-2 h-10 px-4 bg-slate-200 dark:bg-white/10 text-slate-800 dark:text-white rounded-lg text-sm font-bold">
+<span class="material-symbols-outlined">water_drop</span>
+<span>Regar ahora</span>
+</button>
+<button class="flex-1 flex items-center justify-center gap-2 h-10 px-4 bg-slate-200 dark:bg-white/10 text-slate-800 dark:text-white rounded-lg text-sm font-bold">
+<span class="material-symbols-outlined">schedule</span>
+<span>Programar</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col gap-4 p-5 bg-white dark:bg-white/5 rounded-xl shadow-sm hover:shadow-lg hover:dark:shadow-primary/20 transition-shadow duration-300">
+<div class="flex items-center justify-between">
+<p class="text-slate-800 dark:text-white text-lg font-bold">Persianas Dormitorio</p>
+<div class="flex items-center gap-2">
+<div class="size-2.5 rounded-full bg-green-500"></div>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Online</p>
+</div>
+</div>
+<div class="text-slate-600 dark:text-slate-300">
+<p class="text-3xl font-bold">50% Abierto</p>
+<p class="text-sm">Posición actual</p>
+</div>
+<div class="flex flex-col gap-2 mt-2">
+<label class="text-slate-500 dark:text-slate-400 text-sm" for="blinds-slider">Ajustar Apertura</label>
+<div class="flex items-center gap-3">
+<button class="flex items-center justify-center h-10 w-10 bg-slate-200 dark:bg-white/10 text-slate-800 dark:text-white rounded-lg">
+<span class="material-symbols-outlined">arrow_downward</span>
+</button>
+<input class="w-full h-2 bg-slate-200 dark:bg-white/10 rounded-lg appearance-none cursor-pointer range-lg accent-primary" id="blinds-slider" max="100" min="0" type="range" value="50"/>
+<button class="flex items-center justify-center h-10 w-10 bg-slate-200 dark:bg-white/10 text-slate-800 dark:text-white rounded-lg">
+<span class="material-symbols-outlined">arrow_upward</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-4 p-5 bg-white dark:bg-white/5 rounded-xl shadow-sm hover:shadow-lg hover:dark:shadow-primary/20 transition-shadow duration-300 opacity-60">
+<div class="flex items-center justify-between">
+<p class="text-slate-800 dark:text-white text-lg font-bold">Aire Acondicionado</p>
+<div class="flex items-center gap-2">
+<div class="size-2.5 rounded-full bg-red-500"></div>
+<p class="text-red-500 text-sm">Offline</p>
+</div>
+</div>
+<div class="text-slate-600 dark:text-slate-400">
+<p class="text-3xl font-bold">-</p>
+<p class="text-sm">Última conexión: Ayer</p>
+</div>
+<div class="flex items-center gap-3 mt-2">
+<button class="flex-1 flex items-center justify-center gap-2 h-10 px-4 bg-slate-200 dark:bg-white/10 text-slate-800 dark:text-white rounded-lg text-sm font-bold" disabled="">
+<span class="material-symbols-outlined">power_settings_new</span>
+<span>Conectar</span>
+</button>
+<button class="flex items-center justify-center h-10 w-10 bg-slate-200 dark:bg-white/10 text-slate-800 dark:text-white rounded-lg" disabled="">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed bottom-8 right-8 z-20">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-16 px-6 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] min-w-0 gap-3 shadow-lg shadow-primary/40 hover:shadow-xl hover:shadow-primary/50 transition-shadow">
+<span class="material-symbols-outlined text-2xl">add</span>
+<span class="truncate hidden sm:block">Añadir Dispositivo</span>
+</button>
+</div>
+</main>
+</div>
+</body></html>
