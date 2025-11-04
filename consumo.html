@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html class="" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Consumo de Luz</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/css/consumo.css"/>
+</head>
+<body>
+<div class="app-root">
+<aside class="sidebar">
+<div class="flex flex-col gap-4 mb-8">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Company Logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCT4HRjq1HodxrZMYSxP6S_2upZugO-RNXda9jomiJJilPZKz7TXe8uyYJU_EsQc02xPiPTBFHYDu3wS-AllTQwTGEIVbXiN4XecAht_rkzx0QFLeSR0oXs3-DmP5jMyWdsSsVx8hO8QI8U8ouqQujkD0QoAoBIySf1utoFOi__LHI11QACxYRVaJrpmukp7Doj8XVrHeCYjaR_kNNPAQnqX-GvWEokXYV1sMvvlHWly0QKaOVWG08ZDn_1k2naDohO9F4QjDnjd8OQ");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-medium leading-normal font-display">IoT Service</h1>
+<p class="text-[#92adc9] text-sm font-normal leading-normal font-display">Real-Time Monitoring</p>
+</div>
+</div>
+</div>
+<nav>
+<a class="sidebar-link" href="index.html">
+<span class="material-symbols-outlined text-white text-[24px]">query_stats</span>
+<p class="text-white text-sm font-medium leading-normal font-display">Panel de Control</p>
+</a>
+<a class="sidebar-link" href="devices.html">
+<span class="material-symbols-outlined text-white text-[24px]">devices</span>
+<p class="text-white text-sm font-medium leading-normal font-display">Dispositivos</p>
+</a>
+<a class="sidebar-link active" href="consumo.html">
+<span class="material-symbols-outlined text-white text-[24px]">bolt</span>
+<p class="text-white text-sm font-medium leading-normal font-display">Consumo de Luz</p>
+</a>
+<a class="sidebar-link" href="sugerencias.html">
+<span class="material-symbols-outlined text-white text-[24px]">lightbulb</span>
+<p class="text-white text-sm font-medium leading-normal font-display">Sugerencias de Consumo</p>
+</a>
+<a class="sidebar-link" href="contactanos.html">
+<span class="material-symbols-outlined text-white text-[24px]">contact_support</span>
+<p class="text-white text-sm font-medium leading-normal font-display">Contáctanos</p>
+</a>
+</nav>
+<div class="sidebar-bottom">
+<a class="sidebar-link" href="#">
+<span class="material-symbols-outlined text-white text-[24px]">help</span>
+<p class="text-white text-sm font-medium leading-normal font-display">Support</p>
+</a>
+<a class="sidebar-link" href="#">
+<span class="material-symbols-outlined text-white text-[24px]">logout</span>
+<p class="text-white text-sm font-medium leading-normal font-display">Log out</p>
+</a>
+</div>
+</aside>
+<main>
+<div class="container">
+<h2 class="section-title">Consumo de Luz</h2>
+<div class="grid">
+<div class="card">
+<p>Resumen mensual</p>
+<p><strong>1,204 kWh</strong> este mes</p>
+<p>Variación: <strong>+2.5%</strong></p>
+</div>
+<div class="card">
+<p>Costo estimado</p>
+<p><strong>$ 180.40</strong></p>
+<p>Tarifa aplicada: <strong>Residencial A</strong></p>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="card">
+<div class="row-between">
+<div>
+<p>Consumo de Energía - Últimas 24 Horas</p>
+<div class="summary">
+<p><strong>850 kWh</strong></p>
+<p style="color:#0bda5b"><strong>+4.2%</strong></p>
+</div>
+</div>
+<button class="icon-btn" aria-label="Más opciones">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="chart-area">
+<svg fill="none" height="100%" preserveAspectRatio="none" viewBox="0 0 472 150" width="100%" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V149H0V109Z" fill="url(#paint0_linear_chart)"></path>
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25" stroke="#137fec" stroke-linecap="round" stroke-width="3"></path>
+<defs>
+<linearGradient gradientUnits="userSpaceOnUse" id="paint0_linear_chart" x1="236" x2="236" y1="1" y2="149">
+<stop stop-color="#137fec" stop-opacity="0.3"></stop>
+<stop offset="1" stop-color="#137fec" stop-opacity="0"></stop>
+</linearGradient>
+</defs>
+</svg>
+<div class="row-split">
+<p style="color:#6b7280;font-weight:700">00:00</p>
+<p style="color:#6b7280;font-weight:700">04:00</p>
+<p style="color:#6b7280;font-weight:700">08:00</p>
+<p style="color:#6b7280;font-weight:700">12:00</p>
+<p style="color:#6b7280;font-weight:700">16:00</p>
+<p style="color:#6b7280;font-weight:700">20:00</p>
+<p style="color:#6b7280;font-weight:700">23:59</p>
+</div>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="card">
+<div class="row-between">
+<p>Consumo por día - Últimos 7 días</p>
+<p><strong>3,920 kWh</strong></p>
+</div>
+<div class="chart-area">
+<svg viewBox="0 0 500 200" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+<g fill="#dbeafe">
+<rect x="20" y="120" width="40" height="60" rx="6"></rect>
+<rect x="90" y="90" width="40" height="90" rx="6"></rect>
+<rect x="160" y="70" width="40" height="110" rx="6"></rect>
+<rect x="230" y="100" width="40" height="80" rx="6"></rect>
+<rect x="300" y="50" width="40" height="130" rx="6"></rect>
+<rect x="370" y="80" width="40" height="100" rx="6"></rect>
+<rect x="440" y="110" width="40" height="70" rx="6"></rect>
+</g>
+<g fill="#137fec">
+<rect x="20" y="130" width="40" height="50" rx="6"></rect>
+<rect x="90" y="110" width="40" height="70" rx="6"></rect>
+<rect x="160" y="90" width="40" height="90" rx="6"></rect>
+<rect x="230" y="120" width="40" height="60" rx="6"></rect>
+<rect x="300" y="70" width="40" height="110" rx="6"></rect>
+<rect x="370" y="100" width="40" height="80" rx="6"></rect>
+<rect x="440" y="130" width="40" height="50" rx="6"></rect>
+</g>
+</svg>
+<div class="row-split">
+<p style="color:#6b7280;font-weight:700">Lun</p>
+<p style="color:#6b7280;font-weight:700">Mar</p>
+<p style="color:#6b7280;font-weight:700">Mié</p>
+<p style="color:#6b7280;font-weight:700">Jue</p>
+<p style="color:#6b7280;font-weight:700">Vie</p>
+<p style="color:#6b7280;font-weight:700">Sáb</p>
+<p style="color:#6b7280;font-weight:700">Dom</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var path = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.sidebar a.sidebar-link').forEach(function(a) {
+    var href = a.getAttribute('href');
+    if (href === path) { a.classList.add('active'); }
+    else { a.classList.remove('active'); }
+  });
+});
+</script>
+</body></html>
+

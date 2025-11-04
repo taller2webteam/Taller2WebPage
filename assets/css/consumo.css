@@ -1,0 +1,24 @@
+.material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+:root { --color-primary:#f49bf4; --color-sidebar:#ed85ed; --color-sidebar-active:#8e4f68; --color-bg:#f8f6f8; --color-text:#2d3748; --color-card:#fff; --color-border:#e5e7eb; --radius:12px; --radius-sm:8px; --shadow:0 1px 2px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.06); }
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+.app-root { display: flex; min-height: 100vh; width: 100%; }
+.sidebar { width: 256px; background: var(--color-sidebar); color: #fff; padding: 16px; display: flex; flex-direction: column; }
+.sidebar nav { display: flex; flex-direction: column; gap: 8px; flex: 1 1 auto; }
+.sidebar-bottom { display: flex; flex-direction: column; gap: 8px; }
+.sidebar-link { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: var(--radius-sm); color: #fff; text-decoration: none; transition: background .2s; }
+.sidebar-link:hover { background: rgba(0,0,0,.1); }
+.sidebar-link.active { background: var(--color-sidebar-active); }
+main { flex: 1 1 auto; overflow-y: auto; }
+.container { max-width: 1120px; margin: 0 auto; padding: 24px; }
+.card { background: var(--color-card); border: 1px solid var(--color-border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); }
+.section-title { margin: 0 0 16px 0; font-size: 28px; font-weight: 800; letter-spacing: -.02em; }
+.grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+
+/* Charts */
+.summary { display: flex; align-items: baseline; gap: 12px; }
+.row-between { display: flex; justify-content: space-between; align-items: flex-start; }
+.chart-area { min-height: 250px; display: flex; flex-direction: column; gap: 16px; padding: 16px 0; }
+.row-split { display: flex; justify-content: space-between; }
+

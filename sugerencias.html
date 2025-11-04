@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html class="" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sugerencias de Consumo</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/css/sugerencias.css"/>
+</head>
+<body>
+<div class="app-root">
+<aside class="sidebar">
+<div class="flex flex-col gap-4 mb-8">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Company Logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCT4HRjq1HodxrZMYSxP6S_2upZugO-RNXda9jomiJJilPZKz7TXe8uyYJU_EsQc02xPiPTBFHYDu3wS-AllTQwTGEIVbXiN4XecAht_rkzx0QFLeSR0oXs3-DmP5jMyWdsSsVx8hO8QI8U8ouqQujkD0QoAoBIySf1utoFOi__LHI11QACxYRVaJrpmukp7Doj8XVrHeCYjaR_kNNPAQnqX-GvWEokXYV1sMvvlHWly0QKaOVWG08ZDn_1k2naDohO9F4QjDnjd8OQ");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-medium leading-normal font-display">IoT Service</h1>
+<p class="text-[#92adc9] text-sm font-normal leading-normal font-display">Real-Time Monitoring</p>
+</div>
+</div>
+</div>
+<nav>
+<a class="sidebar-link" href="index.html">
+<span class="material-symbols-outlined text-white text-[24px]">query_stats</span>
+<p class="text-white text-sm font-medium leading-normal font-display">Panel de Control</p>
+</a>
+<a class="sidebar-link" href="devices.html">
+<span class="material-symbols-outlined text-white text-[24px]">devices</span>
+<p class="text-white text-sm font-medium leading-normal font-display">Dispositivos</p>
+</a>
+<a class="sidebar-link" href="consumo.html">
+<span class="material-symbols-outlined text-white text-[24px]">bolt</span>
+<p class="text-white text-sm font-medium leading-normal font-display">Consumo de Luz</p>
+</a>
+<a class="sidebar-link active" href="sugerencias.html">
+<span class="material-symbols-outlined text-white text-[24px]">lightbulb</span>
+<p class="text-white text-sm font-medium leading-normal font-display">Sugerencias de Consumo</p>
+</a>
+<a class="sidebar-link" href="contactanos.html">
+<span class="material-symbols-outlined text-white text-[24px]">contact_support</span>
+<p class="text-white text-sm font-medium leading-normal font-display">Contáctanos</p>
+</a>
+</nav>
+<div class="sidebar-bottom">
+<a class="sidebar-link" href="#">
+<span class="material-symbols-outlined text-white text-[24px]">help</span>
+<p class="text-white text-sm font-medium leading-normal font-display">Support</p>
+</a>
+<a class="sidebar-link" href="#">
+<span class="material-symbols-outlined text-white text-[24px]">logout</span>
+<p class="text-white text-sm font-medium leading-normal font-display">Log out</p>
+</a>
+</div>
+</aside>
+<main>
+<div class="container">
+<h2 class="section-title">Sugerencias de Consumo</h2>
+<div class="grid">
+<div class="card">
+<p>Optimiza horarios de alto consumo</p>
+<p>Programa electrodomésticos fuera de horas pico.</p>
+</div>
+<div class="card">
+<p>Mantén sensores y medidores calibrados</p>
+<p>Evita lecturas erróneas y consumo innecesario.</p>
+</div>
+<div class="card">
+<p>Iluminación eficiente</p>
+<p>Reemplaza bombillas por LED y usa atenuadores.</p>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var path = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.sidebar a.sidebar-link').forEach(function(a) {
+    var href = a.getAttribute('href');
+    if (href === path) { a.classList.add('active'); }
+    else { a.classList.remove('active'); }
+  });
+});
+</script>
+</body></html>
+
