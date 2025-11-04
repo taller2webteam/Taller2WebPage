@@ -24,23 +24,23 @@
 <nav>
 <a class="sidebar-link active" href="index.html">
 <span class="material-symbols-outlined text-white text-[24px]">query_stats</span>
-<p class="text-white text-sm font-medium leading-normal font-display">Dashboard</p>
+<p class="text-white text-sm font-medium leading-normal font-display">Panel de Control</p>
 </a>
 <a class="sidebar-link" href="devices.html">
 <span class="material-symbols-outlined text-white text-[24px]">devices</span>
-<p class="text-white text-sm font-medium leading-normal font-display">Devices</p>
+<p class="text-white text-sm font-medium leading-normal font-display">Dispositivos</p>
 </a>
 <a class="sidebar-link" href="#">
 <span class="material-symbols-outlined text-white text-[24px]">notifications</span>
-<p class="text-white text-sm font-medium leading-normal font-display">Alerts</p>
+<p class="text-white text-sm font-medium leading-normal font-display">factura de luz</p>
 </a>
 <a class="sidebar-link" href="#">
 <span class="material-symbols-outlined text-white text-[24px]">assessment</span>
-<p class="text-white text-sm font-medium leading-normal font-display">Reports</p>
+<p class="text-white text-sm font-medium leading-normal font-display">sugerencias de consumo</p>
 </a>
 <a class="sidebar-link" href="#">
 <span class="material-symbols-outlined text-white text-[24px]">settings</span>
-<p class="text-white text-sm font-medium leading-normal font-display">Settings</p>
+<p class="text-white text-sm font-medium leading-normal font-display">Contactanos</p>
 </a>
 </nav>
 <div class="sidebar-bottom">
@@ -68,14 +68,14 @@
 </div>
 </header>
 <div class="tabs">
-<nav aria-label="Tabs" class="tabs-nav">
+<!-- <nav aria-label="Tabs" class="tabs-nav">
 <a class="tab active" href="index.html">
                         Monitor de Consumo
                     </a>
 <a class="tab" href="devices.html">
                         Gestión de Dispositivos
                     </a>
-</nav>
+</nav> -->
 </div>
 <div class="filter-bar">
 <div class="filters">
@@ -232,4 +232,14 @@
 </div>
 </main>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var path = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.sidebar a.sidebar-link').forEach(function(a) {
+    var href = a.getAttribute('href');
+    if (href === path) { a.classList.add('active'); }
+    else { a.classList.remove('active'); }
+  });
+});
+</script>
 </body></html>

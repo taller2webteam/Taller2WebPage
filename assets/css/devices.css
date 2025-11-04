@@ -31,6 +31,9 @@ body {
 .sidebar { width: 256px; background: var(--color-sidebar); color: #fff; padding: 16px; display: flex; flex-direction: column; }
 .sidebar nav { display: flex; flex-direction: column; gap: 8px; flex: 1 1 auto; }
 .sidebar-bottom { display: flex; flex-direction: column; gap: 8px; }
+.sidebar-header { display: flex; flex-direction: column; gap: 16px; margin-bottom: 16px; }
+.brand { display: flex; align-items: center; gap: 12px; }
+.avatar { width: 40px; height: 40px; background-position: center; background-repeat: no-repeat; background-size: cover; border-radius: 9999px; }
 .sidebar-link { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: var(--radius-sm); color: #fff; text-decoration: none; transition: background .2s ease; }
 .sidebar-link:hover { background: rgba(0,0,0,0.1); }
 .sidebar-link.active { background: var(--color-sidebar-active); }
@@ -61,6 +64,11 @@ header h2 { margin: 0; font-size: 18px; font-weight: 700; color: #111827; }
 button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 10px; border: 1px solid var(--color-border); background: #f3f4f6; color: #111827; font-weight: 700; cursor: pointer; }
 button:hover { background: #e5e7eb; }
 input[type="range"] { width: 100%; accent-color: var(--color-primary); }
+
+/* Status dots */
+.status-dot { width: 10px; height: 10px; border-radius: 9999px; }
+.green { background: #10b981; }
+.red { background: #ef4444; }
 
 /* Floating action */
 .fixed { position: fixed; }
