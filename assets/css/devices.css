@@ -28,7 +28,7 @@ body {
 .app-root { display: flex; min-height: 100vh; width: 100%; }
 
 /* Sidebar */
-.sidebar { width: 256px; background: var(--color-sidebar); color: #fff; padding: 16px; display: flex; flex-direction: column; height: 100vh; overflow-y: auto; flex-shrink: 0; }
+.sidebar { position: fixed; top: 0; left: 0; width: 256px; background: var(--color-sidebar); color: #fff; padding: 16px; display: flex; flex-direction: column; height: 100vh; overflow-y: auto; flex-shrink: 0; }
 .sidebar nav { display: flex; flex-direction: column; gap: 8px; flex: 1 1 auto; }
 .sidebar-bottom { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
 .sidebar-header { display: flex; flex-direction: column; gap: 16px; margin-bottom: 16px; }
@@ -39,7 +39,7 @@ body {
 .sidebar-link.active { background: var(--color-sidebar-active); }
 
 /* Main */
-main { flex: 1 1 auto; overflow-y: auto; }
+main { flex: 1 1 auto; overflow-y: auto; margin-left: 256px; }
 .page-inner { padding: 24px; display: flex; justify-content: center; }
 .layout-content-container { width: 100%; max-width: 1200px; }
 

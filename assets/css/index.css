@@ -33,6 +33,9 @@ body {
 
 /* Sidebar */
 .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 256px;
   background: var(--color-sidebar);
   color: #fff;
@@ -62,7 +65,7 @@ body {
 .sidebar-link.active { background: var(--color-sidebar-active); }
 
 /* Main container */
-main { flex: 1 1 auto; overflow-y: auto; }
+main { flex: 1 1 auto; overflow-y: auto; margin-left: 256px; }
 .container { max-width: 1120px; margin: 0 auto; padding: 24px; }
 
 /* Header */

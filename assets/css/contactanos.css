@@ -4,13 +4,13 @@
 html, body { height: 100%; }
 body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
 .app-root { display: flex; min-height: 100vh; width: 100%; }
-.sidebar { width: 256px; background: var(--color-sidebar); color: #fff; padding: 16px; display: flex; flex-direction: column; height: 100vh; overflow-y: auto; flex-shrink: 0; }
+.sidebar { position: fixed; top: 0; left: 0; width: 256px; background: var(--color-sidebar); color: #fff; padding: 16px; display: flex; flex-direction: column; height: 100vh; overflow-y: auto; flex-shrink: 0; }
 .sidebar nav { display: flex; flex-direction: column; gap: 8px; flex: 1 1 auto; }
 .sidebar-bottom { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
 .sidebar-link { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: var(--radius-sm); color: #fff; text-decoration: none; transition: background .2s; }
 .sidebar-link:hover { background: rgba(0,0,0,.1); }
 .sidebar-link.active { background: var(--color-sidebar-active); }
-main { flex: 1 1 auto; overflow-y: auto; }
+main { flex: 1 1 auto; overflow-y: auto; margin-left: 256px; }
 .container { max-width: 1120px; margin: 0 auto; padding: 24px; }
 .card { background: var(--color-card); border: 1px solid var(--color-border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); }
 .section-title { margin: 0 0 16px 0; font-size: 28px; font-weight: 800; letter-spacing: -.02em; }
