@@ -103,10 +103,30 @@ header h1 { margin: 0; font-size: 32px; font-weight: 800; letter-spacing: -0.02e
 .filter-select { height: 36px; min-width: 180px; border: 1px solid var(--color-border); border-radius: 10px; padding: 0 10px; background: #fff; color: #111827; }
 
 /* Stats grid and cards */
-.stats-grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-bottom: 24px; }
+.stats-grid { display: grid; gap: 20px; grid-template-columns: repeat(4, 1fr); margin-bottom: 24px; }
+@media (max-width: 1024px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .stats-grid { grid-template-columns: 1fr; }
+}
 .stats-grid > div,
 .card { background: var(--color-card); border: 1px solid var(--color-border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); }
+.stats-grid > div { transition: all 0.2s ease; }
+.stats-grid > div:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 .mb-6 { margin-bottom: 24px; }
+
+/* Alert styles */
+.bg-red-50 { background-color: #fef2f2; }
+.border-red-200 { border-color: #fecaca; }
+.text-red-600 { color: #dc2626; }
+.bg-yellow-50 { background-color: #fefce8; }
+.border-yellow-200 { border-color: #fef08a; }
+.text-yellow-600 { color: #ca8a04; }
+.bg-blue-50 { background-color: #eff6ff; }
+.border-blue-200 { border-color: #bfdbfe; }
+.text-blue-600 { color: #2563eb; }
+.whitespace-nowrap { white-space: nowrap; }
 
 /* Chart area */
 .card header { margin-bottom: 12px; }
@@ -137,7 +157,23 @@ header h1 { margin: 0; font-size: 32px; font-weight: 800; letter-spacing: -0.02e
 table { width: 100%; border-collapse: collapse; }
 thead { text-transform: uppercase; font-size: 12px; color: var(--color-muted); border-bottom: 1px solid var(--color-border); }
 th, td { padding: 12px 16px; text-align: left; }
-tbody tr { border-bottom: 1px solid var(--color-border); }
+tbody tr { border-bottom: 1px solid var(--color-border); transition: background 0.2s; }
+tbody tr:hover { background: rgba(0,0,0,0.02); }
+
+/* Status badges */
+.inline-flex { display: inline-flex; }
+.items-center { align-items: center; }
+.px-2 { padding-left: 8px; padding-right: 8px; }
+.py-1 { padding-top: 4px; padding-bottom: 4px; }
+.rounded-full { border-radius: 9999px; }
+.text-xs { font-size: 12px; }
+.font-medium { font-weight: 500; }
+.bg-green-100 { background-color: #dcfce7; }
+.text-green-800 { color: #166534; }
+.bg-red-100 { background-color: #fee2e2; }
+.text-red-800 { color: #991b1b; }
+.bg-yellow-100 { background-color: #fef9c3; }
+.text-yellow-800 { color: #854d0e; }
 
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;

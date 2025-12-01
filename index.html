@@ -97,33 +97,72 @@
 <span>Rango Personalizado</span>
 <span class="material-symbols-outlined text-[20px]">expand_more</span>
 </button>
+<button class="btn" id="toggleMonitoring" style="background: #10b981; color: white;">
+<span class="material-symbols-outlined text-white text-[20px]">play_arrow</span>
+<span>Iniciar Monitoreo</span>
+</button>
 </div>
 <div class="filters-side">
 <select class="filter-select">
 <option>Todos los Dispositivos</option>
-<option>Sensores de Temperatura</option>
-<option>Medidores de Energía</option>
-<option>Cámaras</option>
+<option>Sensor Temperatura</option>
+<option>Medidor Energía</option>
+<option>Cámara</option>
+<option>Sensor Humedad</option>
 </select>
 </div>
 </div>
+<div class="card mb-6" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none;">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined" style="font-size: 32px;">developer_board</span>
+<div>
+<p class="text-white text-sm font-medium opacity-90">Dispositivo Conectado</p>
+<p class="text-white text-2xl font-bold">Entrada ESP32 Prueba</p>
+</div>
+</div>
+<div class="flex items-center gap-2 mt-2">
+<span class="w-2 h-2 rounded-full" style="background: #10b981;"></span>
+<span class="text-white text-sm opacity-90" id="device-status">En espera</span>
+</div>
+</div>
+
 <div class="stats-grid">
 <div>
-<p class="text-gray-600 dark:text-white text-base font-medium leading-normal font-display">Consumo Energético Total</p>
-<p class="text-gray-900 dark:text-white tracking-light text-3xl font-bold leading-tight font-display">1,204 kWh</p>
-<p class="text-[#0bda5b] text-base font-medium leading-normal font-display">+2.5% vs ayer</p>
+<p class="text-gray-600 dark:text-white text-base font-medium leading-normal font-display">Corriente (A)</p>
+<p class="text-gray-900 dark:text-white tracking-light text-3xl font-bold leading-tight font-display" id="current-value">0.15 A</p>
+<p class="text-[#3b82f6] text-base font-medium leading-normal font-display">En tiempo real</p>
 </div>
 <div>
-<p class="text-gray-600 dark:text-white text-base font-medium leading-normal font-display">Dispositivos en Línea</p>
-<p class="text-gray-900 dark:text-white tracking-light text-3xl font-bold leading-tight font-display">142/150</p>
-<p class="text-[#0bda5b] text-base font-medium leading-normal font-display">+1.2%</p>
+<p class="text-gray-600 dark:text-white text-base font-medium leading-normal font-display">Voltaje (V)</p>
+<p class="text-gray-900 dark:text-white tracking-light text-3xl font-bold leading-tight font-display" id="voltage-value">120 V</p>
+<p class="text-[#3b82f6] text-base font-medium leading-normal font-display">En tiempo real</p>
 </div>
 <div>
-<p class="text-gray-600 dark:text-white text-base font-medium leading-normal font-display">Alertas Recientes</p>
-<p class="text-gray-900 dark:text-white tracking-light text-3xl font-bold leading-tight font-display">3</p>
-<p class="text-[#fa6238] text-base font-medium leading-normal font-display">-5.0%</p>
+<p class="text-gray-600 dark:text-white text-base font-medium leading-normal font-display">Potencia (W)</p>
+<p class="text-gray-900 dark:text-white tracking-light text-3xl font-bold leading-tight font-display" id="power-value">18 W</p>
+<p class="text-[#3b82f6] text-base font-medium leading-normal font-display">En tiempo real</p>
+</div>
+<div>
+<p class="text-gray-600 dark:text-white text-base font-medium leading-normal font-display">Costo Estimado Mensual</p>
+<p class="text-gray-900 dark:text-white tracking-light text-3xl font-bold leading-tight font-display" id="cost-value">$41</p>
+<p class="text-[#0bda5b] text-base font-medium leading-normal font-display" id="cost-trend">Basado en uso actual</p>
 </div>
 </div>
+<div class="card mb-6" id="alerts-section" style="display: none;">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-gray-600 dark:text-white text-lg font-medium leading-normal font-display">Alertas Recientes</p>
+<p class="text-gray-500 text-sm">Notificaciones y eventos importantes</p>
+</div>
+<button class="icon-btn" onclick="document.getElementById('alerts-section').style.display='none'">
+<span class="material-symbols-outlined text-gray-600 dark:text-gray-300">close</span>
+</button>
+</div>
+<div id="alerts-container" class="flex flex-col gap-3">
+<!-- Las alertas se cargarán dinámicamente -->
+</div>
+</div>
+
 <div class="card mb-6">
 <div class="flex justify-between items-start">
 <div>
@@ -185,47 +224,30 @@
 </div>
 </div>
 <div class="card span-3">
-<p class="text-gray-600 dark:text-white text-lg font-medium leading-normal font-display">Top 5 Dispositivos con Mayor Consumo</p>
+<p class="text-gray-600 dark:text-white text-lg font-medium leading-normal font-display">Lecturas Detalladas</p>
 <div class="overflow-x-auto">
 <table class="w-full text-left text-sm font-display">
 <thead class="text-xs text-gray-500 dark:text-gray-400 uppercase border-b border-gray-200 dark:border-[#324d67]">
 <tr>
-<th class="px-4 py-3" scope="col">ID del Dispositivo</th>
-<th class="px-4 py-3" scope="col">Tipo</th>
-<th class="px-4 py-3" scope="col">Última Lectura</th>
-<th class="px-4 py-3 text-right" scope="col">Consumo Total</th>
+<th class="px-4 py-3" scope="col">Dispositivo</th>
+<th class="px-4 py-3" scope="col">Corriente</th>
+<th class="px-4 py-3" scope="col">Voltaje</th>
+<th class="px-4 py-3" scope="col">Potencia</th>
+<th class="px-4 py-3 text-right" scope="col">Estado</th>
 </tr>
 </thead>
 <tbody>
-<tr class="border-b border-gray-200 dark:border-[#324d67]">
-<td class="px-4 py-3 font-medium text-gray-900 dark:text-white">SEN-TEMP-01A</td>
-<td class="px-4 py-3 text-gray-600 dark:text-gray-300">Sensor Temperatura</td>
-<td class="px-4 py-3 text-gray-600 dark:text-gray-300">20.5°C</td>
-<td class="px-4 py-3 text-right font-semibold text-gray-900 dark:text-white">150.2 kWh</td>
-</tr>
-<tr class="border-b border-gray-200 dark:border-[#324d67]">
-<td class="px-4 py-3 font-medium text-gray-900 dark:text-white">PWR-MTR-05B</td>
-<td class="px-4 py-3 text-gray-600 dark:text-gray-300">Medidor Energía</td>
-<td class="px-4 py-3 text-gray-600 dark:text-gray-300">5.8 kW</td>
-<td class="px-4 py-3 text-right font-semibold text-gray-900 dark:text-white">128.9 kWh</td>
-</tr>
-<tr class="border-b border-gray-200 dark:border-[#324d67]">
-<td class="px-4 py-3 font-medium text-gray-900 dark:text-white">CAM-SEC-02C</td>
-<td class="px-4 py-3 text-gray-600 dark:text-gray-300">Cámara</td>
-<td class="px-4 py-3 text-gray-600 dark:text-gray-300">Activa</td>
-<td class="px-4 py-3 text-right font-semibold text-gray-900 dark:text-white">95.4 kWh</td>
-</tr>
-<tr class="border-b border-gray-200 dark:border-[#324d67]">
-<td class="px-4 py-3 font-medium text-gray-900 dark:text-white">SEN-HUM-03D</td>
-<td class="px-4 py-3 text-gray-600 dark:text-gray-300">Sensor Humedad</td>
-<td class="px-4 py-3 text-gray-600 dark:text-gray-300">45%</td>
-<td class="px-4 py-3 text-right font-semibold text-gray-900 dark:text-white">72.1 kWh</td>
-</tr>
 <tr>
-<td class="px-4 py-3 font-medium text-gray-900 dark:text-white">PWR-MTR-08A</td>
-<td class="px-4 py-3 text-gray-600 dark:text-gray-300">Medidor Energía</td>
-<td class="px-4 py-3 text-gray-600 dark:text-gray-300">4.2 kW</td>
-<td class="px-4 py-3 text-right font-semibold text-gray-900 dark:text-white">68.5 kWh</td>
+<td class="px-4 py-3 font-medium text-gray-900 dark:text-white">Entrada ESP32 Prueba</td>
+<td class="px-4 py-3 text-gray-600 dark:text-gray-300" id="table-current">0.15 A</td>
+<td class="px-4 py-3 text-gray-600 dark:text-gray-300" id="table-voltage">120 V</td>
+<td class="px-4 py-3 text-gray-600 dark:text-gray-300" id="table-power">18 W</td>
+<td class="px-4 py-3 text-right">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium" style="background: #dcfce7; color: #16a34a;">
+<span class="w-2 h-2 rounded-full" style="background: #16a34a;"></span>
+Conectado
+</span>
+</td>
 </tr>
 </tbody>
 </table>
@@ -280,6 +302,13 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+
+<!-- Dashboard Data & Filters -->
+<script src="assets/js/dashboard-data.js"></script>
+<script src="assets/js/dashboard-filters.js"></script>
+
+<!-- Real-Time Monitoring -->
+<script src="assets/js/real-time-monitor.js"></script>
 
 <!-- Chat Configuration & Script -->
 <script src="assets/js/chat-config.js"></script>

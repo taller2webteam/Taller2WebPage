@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
 <link rel="stylesheet" href="assets/css/contactanos.css"/>
+<link rel="stylesheet" href="assets/css/chat.css"/>
 </head>
 <body>
 <div class="app-root">
@@ -86,5 +87,43 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+
+<!-- Chat Button -->
+<button id="chatButton" class="chat-fab">
+  <span class="material-symbols-outlined">chat</span>
+</button>
+
+<!-- Chat Window -->
+<div id="chatWindow" class="chat-window">
+  <div class="chat-header">
+    <div class="flex items-center gap-2">
+      <span class="material-symbols-outlined">smart_toy</span>
+      <h3>Asistente Virtual</h3>
+    </div>
+    <button id="closeChat" class="chat-close-btn">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+  </div>
+  <div id="chatMessages" class="chat-messages">
+    <div class="chat-message assistant-message">
+      <div class="message-avatar">
+        <span class="material-symbols-outlined">smart_toy</span>
+      </div>
+      <div class="message-content">
+        ¡Hola! Soy tu asistente virtual. ¿En qué puedo ayudarte hoy?
+      </div>
+    </div>
+  </div>
+  <div class="chat-input-container">
+    <input type="text" id="chatInput" class="chat-input" placeholder="Escribe tu mensaje...">
+    <button id="sendMessage" class="chat-send-btn">
+      <span class="material-symbols-outlined">send</span>
+    </button>
+  </div>
+</div>
+
+<!-- Chat Configuration & Script -->
+<script src="assets/js/chat-config.js"></script>
+<script src="assets/js/chat.js"></script>
 </body></html>
 

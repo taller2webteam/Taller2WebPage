@@ -75,10 +75,8 @@ Se ha implementado exitosamente un chat asistente virtual con las siguientes car
 
 ### Ya está todo listo! ✅
 
-Tu token ya está configurado en `assets/js/chat-config.js`:
-```javascript
-token: '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'
-```
+El token ahora se maneja de forma segura en las variables de entorno de Vercel.
+Ya no es necesario configurarlo en el código.
 
 ### Para probar:
 

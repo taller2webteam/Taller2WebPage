@@ -19,11 +19,8 @@ Abre el archivo `assets/js/chat.js` y busca la línea:
 const GITHUB_TOKEN = 'TU_TOKEN_DE_GITHUB_AQUI';
 ```
 
-Reemplaza `'TU_TOKEN_DE_GITHUB_AQUI'` con tu token real:
-
-```javascript
-const GITHUB_TOKEN = 'ghp_tu_token_real_aqui';
-```
+**NOTA:** El proyecto ahora usa variables de entorno de Vercel para mayor seguridad.
+El token ya no se configura en este archivo, sino en las variables de entorno del servidor.
 
 ### Paso 3: (Opcional) Cambiar el Modelo
 

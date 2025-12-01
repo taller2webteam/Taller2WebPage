@@ -1,7 +1,11 @@
 // ============================================
-// CONFIGURACIÓN - CAMBIA TU TOKEN EN chat-config.js
+// CONFIGURACIÓN
 // ============================================
-const GITHUB_TOKEN = window.CHAT_CONFIG?.token || 'TU_TOKEN_DE_GITHUB_AQUI';
+// Detectar si estamos en desarrollo (localhost) o producción (Vercel)
+const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:3000/api/chat'
+  : '/api/chat';
+
 const GITHUB_MODEL = window.CHAT_CONFIG?.model || 'gpt-4o';
 const TEMPERATURE = window.CHAT_CONFIG?.temperature || 0.7;
 const MAX_TOKENS = window.CHAT_CONFIG?.maxTokens || 1000;
@@ -66,12 +70,11 @@ async function sendUserMessage() {
   const typingId = addTypingIndicator();
 
   try {
-    // Call GitHub Models API
-    const response = await fetch('https://models.inference.ai.azure.com/chat/completions', {
+    // Llamar a la API de Vercel (que actúa como proxy a GitHub Models)
+    const response = await fetch(API_URL, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${GITHUB_TOKEN}`
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         messages: [
@@ -113,11 +116,13 @@ async function sendUserMessage() {
     
     let errorMessage = 'Lo siento, hubo un error al procesar tu mensaje.';
     if (error.message.includes('401') || error.message.includes('403')) {
-      errorMessage = 'Error de autenticación. Por favor, verifica que el token de GitHub esté configurado correctamente.';
+      errorMessage = 'Error de autenticación. El token de GitHub no está configurado o no es válido.';
     } else if (error.message.includes('429')) {
       errorMessage = 'Se ha excedido el límite de solicitudes. Por favor, espera un momento e intenta de nuevo.';
     } else if (error.message.includes('500') || error.message.includes('502') || error.message.includes('503')) {
       errorMessage = 'El servicio no está disponible en este momento. Por favor, intenta más tarde.';
+    } else if (error.message.includes('not configured')) {
+      errorMessage = 'El chatbot no está configurado correctamente. Contacta al administrador.';
     }
     
     addMessage(errorMessage, 'error');

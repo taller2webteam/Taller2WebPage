@@ -1,18 +1,8 @@
 // ============================================
 // CONFIGURACIÓN DEL CHAT
 // ============================================
-// 
-// INSTRUCCIONES:
-// 1. Reemplaza 'TU_TOKEN_DE_GITHUB_AQUI' con tu token real de GitHub
-// 2. Obtén tu token en: https://github.com/marketplace/models
-// 3. Guarda este archivo después de hacer los cambios
-//
-// ============================================
 
 const CHAT_CONFIG = {
-  // 🔑 Coloca tu token de GitHub aquí
-  token: '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',
-  
   // 🤖 Modelo a usar (opciones: 'gpt-4o', 'gpt-4o-mini', 'gpt-4')
   model: 'gpt-4o',
   
