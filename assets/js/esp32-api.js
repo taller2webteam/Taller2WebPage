@@ -97,6 +97,8 @@ async function getSensoresData() {
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
     
+    console.log('📦 Datos recibidos de /sensores:', data);
+    
     connectionState.isConnected = true;
     connectionState.lastUpdate = Date.now();
     connectionState.errorCount = 0;
@@ -114,6 +116,8 @@ async function getSensoresData() {
         flamaAnalog: data.flama.analog,
         flamaDetectada: data.flama.detectada,
         flamaEstado: data.flama.estado,
+        releEncendido: data.rele ? data.rele.encendido : false, // Estado del relé
+        releEstado: data.rele ? data.rele.estado : 'UNKNOWN', // Estado del relé
         timestamp: data.timestamp,
         uptime: data.uptime_ms,
         voltajeEsSimulado: true // Flag para indicar que el voltaje es simulado
@@ -124,7 +128,7 @@ async function getSensoresData() {
     if (connectionState.errorCount >= connectionState.maxErrors) {
       connectionState.isConnected = false;
     }
-    console.error('Error al obtener datos de sensores:', error);
+    console.error('❌ Error al obtener datos de sensores:', error);
     return { success: false, error: error.message };
   }
 }

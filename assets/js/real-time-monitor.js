@@ -114,19 +114,10 @@ async function updateRealTimeValues() {
   // 10. Almacenar datos para historial
   storeDataPoint(data.corriente, data.voltaje, power);
   
-  // 11. Actualizar estado del relé
-  updateReleStatus();
-}
-
-// Función para actualizar el estado del relé
-async function updateReleStatus() {
-  if (typeof window.ESP32API === 'undefined' || !isMonitoring) return;
-  
-  const result = await window.ESP32API.getReleStatus();
-  
-  if (result.success) {
-    releState.encendido = result.data.encendido;
-    updateReleUI(result.data.encendido);
+  // 11. Actualizar estado del relé (viene en los datos de sensores)
+  if (data.releEncendido !== undefined) {
+    releState.encendido = data.releEncendido;
+    updateReleUI(data.releEncendido);
   }
 }
 
@@ -734,6 +725,9 @@ function loadSavedIPToInput() {
 
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
+  console.log('🚀 Dashboard inicializado');
+  console.log('📍 IP ESP32:', window.ESP32API ? window.ESP32API.getESP32IP() : 'API no cargada');
+  
   const button = document.getElementById('toggleMonitoring');
   if (button) {
     button.addEventListener('click', toggleMonitoring);
@@ -769,6 +763,9 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
+  
+  // Mostrar mensaje de bienvenida
+  console.log('✅ Dashboard listo. Haz clic en "Iniciar Monitoreo" para comenzar.');
 });
 
 // Limpiar al salir de la página
