@@ -316,7 +316,7 @@ function updateFlameIndicator(flamaDetectada, estado, valorAnalog) {
         <div class="flex items-center gap-3 p-4 bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500 rounded">
           <span class="material-symbols-outlined text-red-500 text-2xl">local_fire_department</span>
           <div class="flex-1">
-            <p class="font-weight: 600; margin: 0 0 4px 0; color: #1f2937;">${title}</p>
+            <p style="font-weight: 600; margin: 0 0 4px 0; color: #1f2937;">ALERTA DE FUEGO</p>
             <p class="text-sm text-red-600 dark:text-red-300">Estado: ${estado} | Valor: ${valorAnalog}</p>
             <p class="text-xs text-red-500 dark:text-red-400 mt-1">Detectado ahora</p>
           </div>
