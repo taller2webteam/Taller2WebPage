@@ -25,18 +25,27 @@ async function updateRealTimeValues() {
   // Verificar que la API de ESP32 esté disponible
   if (typeof window.ESP32API === 'undefined') {
     console.error('ESP32API no está disponible');
+    showNotification('Error', 'API de ESP32 no está cargada', 'danger');
     return;
   }
+  
+  console.log('🔄 Obteniendo datos de ESP32...');
+  console.log('📍 IP configurada:', window.ESP32API.getESP32IP());
   
   // Obtener datos de sensores
   const result = await window.ESP32API.getSensoresData();
   
+  console.log('📦 Resultado:', result);
+  
   if (!result.success) {
     // Error al obtener datos
+    console.error('❌ Error al obtener datos:', result.error);
     updateConnectionStatus(false, result.error);
+    showNotification('Error de Conexión', `No se pudo conectar: ${result.error}`, 'danger');
     return;
   }
   
+  console.log('✅ Datos recibidos correctamente');
   const data = result.data;
   
   // Actualizar estado de conexión
@@ -331,7 +340,19 @@ function toggleMonitoring() {
   if (!isMonitoring) {
     // Verificar que la API esté disponible
     if (typeof window.ESP32API === 'undefined') {
-      showNotification('Error', 'No se puede conectar con la ESP32. Verifica la configuración.', 'danger');
+      showNotification('Error', 'API de ESP32 no está cargada. Recarga la página.', 'danger');
+      console.error('❌ ESP32API no está definida');
+      return;
+    }
+    
+    const ip = window.ESP32API.getESP32IP();
+    console.log('🚀 Iniciando monitoreo...');
+    console.log('📍 IP ESP32:', ip);
+    
+    // Verificar que haya una IP configurada
+    if (!ip || ip === '') {
+      showNotification('Error', 'Por favor configura la IP de tu ESP32 primero', 'danger');
+      console.error('❌ No hay IP configurada');
       return;
     }
     
@@ -342,6 +363,7 @@ function toggleMonitoring() {
     }, config.updateInterval);
     
     // Primera actualización inmediata
+    console.log('📡 Primera actualización inmediata...');
     updateRealTimeValues();
     
     // Actualizar botón
@@ -355,7 +377,7 @@ function toggleMonitoring() {
     }
     
     // Mostrar notificación
-    showNotification('Monitoreo ESP32 Iniciado', `Conectando a ${window.ESP32API.getESP32IP()}...`);
+    showNotification('Monitoreo ESP32 Iniciado', `Conectando a ${ip}...`);
   } else {
     // Detener monitoreo
     isMonitoring = false;
@@ -621,8 +643,12 @@ function saveIPFromMainInput() {
 async function testConnectionFromMainButton() {
   if (typeof window.ESP32API === 'undefined') {
     showConnectionFeedback('Error: API no disponible', 'error');
+    console.error('❌ ESP32API no está definida');
     return;
   }
+  
+  const ip = window.ESP32API.getESP32IP();
+  console.log('🧪 Probando conexión a:', ip);
   
   const button = document.getElementById('test-connection-btn');
   const icon = button ? button.querySelector('.material-symbols-outlined') : null;
@@ -634,7 +660,10 @@ async function testConnectionFromMainButton() {
   }
   
   // Intentar conectar
+  console.log('📡 Enviando petición a /status...');
   const result = await window.ESP32API.getStatusData();
+  
+  console.log('📦 Respuesta de prueba:', result);
   
   // Detener animación
   if (icon) {
@@ -642,13 +671,15 @@ async function testConnectionFromMainButton() {
   }
   
   if (result.success) {
-    showConnectionFeedback(`✅ Conectado exitosamente a ${window.ESP32API.getESP32IP()}`, 'success');
+    console.log('✅ Conexión exitosa!');
+    showConnectionFeedback(`✅ Conectado exitosamente a ${ip}`, 'success');
     showNotification('Conexión Exitosa', `ESP32 respondió correctamente`, 'success');
     
     // Actualizar estado visual
     updateConnectionStatusDot(true);
   } else {
-    showConnectionFeedback(`❌ Error de conexión: ${result.error}`, 'error');
+    console.error('❌ Error de conexión:', result.error);
+    showConnectionFeedback(`❌ Error: ${result.error}`, 'error');
     showNotification('Error de Conexión', result.error || 'No se pudo conectar', 'danger');
     
     // Actualizar estado visual

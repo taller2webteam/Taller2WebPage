@@ -4,7 +4,7 @@
 
 // Configuración de la ESP32
 let esp32Config = {
-  ip: localStorage.getItem('esp32_ip') || '192.168.1.100', // IP por defecto
+  ip: localStorage.getItem('esp32_ip') || '172.20.10.11', // IP por defecto
   updateInterval: 2000, // 2 segundos
   timeout: 5000, // 5 segundos timeout
   simulatedVoltage: parseFloat(localStorage.getItem('esp32_simulated_voltage')) || 120, // Voltaje base simulado para uso doméstico (120V México/USA, cambia a 220V si es necesario)
