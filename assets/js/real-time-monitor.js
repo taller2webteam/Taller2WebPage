@@ -433,7 +433,6 @@ function resetDisplayValues() {
     });
   }
 }
-}
 
 // Función para mostrar notificaciones
 function showNotification(title, message, type = 'info') {
