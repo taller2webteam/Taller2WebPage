@@ -66,16 +66,24 @@ async function updateRealTimeValues() {
   const timeSinceManualChange = Date.now() - releState.lastManualChange;
   
   if (data.releEncendido !== undefined) {
+    console.log(`📊 Estado del relé recibido: ${data.releEncendido}, Estado actual: ${releState.encendido}, Tiempo desde cambio: ${timeSinceManualChange}ms`);
+    
     // Si han pasado más de 3 segundos desde el último cambio manual, actualizar
     if (timeSinceManualChange > 3000) {
       if (data.releEncendido !== releState.encendido) {
         console.log(`🔄 Sincronizando estado del relé: ${data.releEncendido}`);
         releState.encendido = data.releEncendido;
         updateReleUI(data.releEncendido);
+      } else {
+        // Aunque el estado sea el mismo, actualizar UI para asegurar que se muestre correctamente
+        console.log(`✅ Estado del relé ya sincronizado: ${data.releEncendido}`);
+        updateReleUI(data.releEncendido);
       }
     } else {
       console.log(`⏸️ Ignorando actualización de relé (cambio manual reciente: ${timeSinceManualChange}ms)`);
     }
+  } else {
+    console.warn('⚠️ No se recibió estado del relé en los datos');
   }
 }
 
@@ -129,6 +137,8 @@ function updateSensorUI(data, power, monthlyCost) {
 
 // Función para actualizar la UI del relé
 function updateReleUI(encendido) {
+  console.log(`🎨 Actualizando UI del relé: ${encendido}`);
+  
   const button = document.getElementById('toggle-rele-btn');
   const statusText = document.getElementById('rele-status-text');
   const icon = document.getElementById('rele-icon');
@@ -142,22 +152,30 @@ function updateReleUI(encendido) {
         <span class="material-symbols-outlined text-white text-[20px]">power_settings_new</span>
         <span>Apagar</span>
       `;
+      console.log('🔴 Botón configurado para APAGAR');
     } else {
       button.style.background = '#10b981';
       button.innerHTML = `
         <span class="material-symbols-outlined text-white text-[20px]">power_settings_new</span>
         <span>Encender</span>
       `;
+      console.log('🟢 Botón configurado para ENCENDER');
     }
+  } else {
+    console.error('❌ No se encontró el botón toggle-rele-btn');
   }
   
   if (statusText) {
     statusText.textContent = `Estado: ${encendido ? 'Encendido' : 'Apagado'}`;
     statusText.style.color = encendido ? '#10b981' : '#6b7280';
+  } else {
+    console.error('❌ No se encontró rele-status-text');
   }
   
   if (icon) {
     icon.style.color = encendido ? '#10b981' : '#6b7280';
+  } else {
+    console.error('❌ No se encontró rele-icon');
   }
 }
 
