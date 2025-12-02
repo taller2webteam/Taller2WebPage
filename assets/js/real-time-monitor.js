@@ -115,7 +115,8 @@ async function updateRealTimeValues() {
   storeDataPoint(data.corriente, data.voltaje, power);
   
   // 11. Actualizar estado del relé (viene en los datos de sensores)
-  if (data.releEncendido !== undefined) {
+  // Solo actualizar si no estamos en medio de un cambio manual
+  if (data.releEncendido !== undefined && !releState.updating) {
     releState.encendido = data.releEncendido;
     updateReleUI(data.releEncendido);
   }
@@ -179,6 +180,11 @@ async function toggleReleState() {
       
       const action = result.data.encendido ? 'encendido' : 'apagado';
       showNotification('Relé Actualizado', `El relé ha sido ${action}`, 'success');
+      
+      // Esperar un momento antes de permitir actualizaciones automáticas
+      setTimeout(() => {
+        releState.updating = false;
+      }, 1000);
     } else {
       showNotification('Error', 'No se pudo cambiar el estado del relé', 'danger');
       
@@ -187,6 +193,7 @@ async function toggleReleState() {
         button.disabled = false;
         updateReleUI(releState.encendido);
       }
+      releState.updating = false;
     }
   } catch (error) {
     showNotification('Error', 'Error al comunicarse con el ESP32', 'danger');
@@ -196,7 +203,6 @@ async function toggleReleState() {
       button.disabled = false;
       updateReleUI(releState.encendido);
     }
-  } finally {
     releState.updating = false;
   }
 }
