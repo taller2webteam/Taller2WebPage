@@ -177,7 +177,7 @@ Dirección IP del ESP32
 </div>
 </div>
 <div class="card">
-<p class="text-gray-600 dark:text-white text-lg font-medium leading-normal font-display mb-4">Sensores ESP32 IoT Device</p>
+<p class="text-gray-600 dark:text-white text-lg font-medium leading-normal font-display mb-4">Sensores y Control ESP32</p>
 <div class="flex flex-col gap-4">
 <div class="flex items-center justify-between p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
 <div class="flex items-center gap-3">
@@ -198,6 +198,24 @@ Dirección IP del ESP32
 </div>
 </div>
 <span class="w-3 h-3 rounded-full bg-orange-500"></span>
+</div>
+<div class="flex items-center justify-between p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-green-600 text-3xl" id="rele-icon">power</span>
+<div>
+<p class="font-bold text-gray-900 dark:text-white">Control de Relé</p>
+<p class="text-sm text-gray-600 dark:text-gray-300" id="rele-status-text">Estado: Desconocido</p>
+</div>
+</div>
+<button 
+  id="toggle-rele-btn" 
+  class="btn h-10 px-6"
+  style="background: #6b7280; color: white; white-space: nowrap;"
+  disabled
+>
+<span class="material-symbols-outlined text-white text-[20px]">power_settings_new</span>
+<span>Cargando...</span>
+</button>
 </div>
 </div>
 </div>

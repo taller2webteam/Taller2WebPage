@@ -226,6 +226,121 @@ async function getStatusData() {
   }
 }
 
+/**
+ * Obtener estado del relé
+ * Endpoint: /rele
+ */
+async function getReleStatus() {
+  try {
+    const response = await fetchWithTimeout(`http://${esp32Config.ip}/rele`);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    const data = await response.json();
+    
+    connectionState.isConnected = true;
+    connectionState.lastUpdate = Date.now();
+    connectionState.errorCount = 0;
+    
+    return {
+      success: true,
+      data: {
+        encendido: data.encendido,
+        estado: data.estado
+      }
+    };
+  } catch (error) {
+    connectionState.errorCount++;
+    console.error('Error al obtener estado del relé:', error);
+    return { success: false, error: error.message };
+  }
+}
+
+/**
+ * Encender el relé
+ * Endpoint: /rele/on
+ */
+async function turnReleOn() {
+  try {
+    const response = await fetchWithTimeout(`http://${esp32Config.ip}/rele/on`);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    const data = await response.json();
+    
+    connectionState.isConnected = true;
+    connectionState.lastUpdate = Date.now();
+    connectionState.errorCount = 0;
+    
+    return {
+      success: data.success,
+      data: {
+        encendido: data.encendido,
+        estado: data.estado,
+        mensaje: data.mensaje
+      }
+    };
+  } catch (error) {
+    connectionState.errorCount++;
+    console.error('Error al encender el relé:', error);
+    return { success: false, error: error.message };
+  }
+}
+
+/**
+ * Apagar el relé
+ * Endpoint: /rele/off
+ */
+async function turnReleOff() {
+  try {
+    const response = await fetchWithTimeout(`http://${esp32Config.ip}/rele/off`);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    const data = await response.json();
+    
+    connectionState.isConnected = true;
+    connectionState.lastUpdate = Date.now();
+    connectionState.errorCount = 0;
+    
+    return {
+      success: data.success,
+      data: {
+        encendido: data.encendido,
+        estado: data.estado,
+        mensaje: data.mensaje
+      }
+    };
+  } catch (error) {
+    connectionState.errorCount++;
+    console.error('Error al apagar el relé:', error);
+    return { success: false, error: error.message };
+  }
+}
+
+/**
+ * Toggle (cambiar estado) del relé
+ * Endpoint: /rele/toggle
+ */
+async function toggleRele() {
+  try {
+    const response = await fetchWithTimeout(`http://${esp32Config.ip}/rele/toggle`);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    const data = await response.json();
+    
+    connectionState.isConnected = true;
+    connectionState.lastUpdate = Date.now();
+    connectionState.errorCount = 0;
+    
+    return {
+      success: data.success,
+      data: {
+        encendido: data.encendido,
+        estado: data.estado,
+        mensaje: data.mensaje
+      }
+    };
+  } catch (error) {
+    connectionState.errorCount++;
+    console.error('Error al cambiar estado del relé:', error);
+    return { success: false, error: error.message };
+  }
+}
+
 // ============================================
 // FUNCIONES DE CONFIGURACIÓN
 // ============================================
@@ -292,6 +407,12 @@ if (typeof window !== 'undefined') {
     getCorrienteData,
     getFlamaData,
     getStatusData,
+    
+    // Funciones de control del relé
+    getReleStatus,
+    turnReleOn,
+    turnReleOff,
+    toggleRele,
     
     // Funciones de configuración
     setESP32IP,

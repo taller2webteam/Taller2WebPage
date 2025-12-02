@@ -14,6 +14,12 @@ const config = {
 // Última alerta de flama mostrada
 let lastFlameAlert = null;
 
+// Estado del relé
+let releState = {
+  encendido: false,
+  updating: false
+};
+
 // Función para actualizar los valores en tiempo real desde la ESP32
 async function updateRealTimeValues() {
   // Verificar que la API de ESP32 esté disponible
@@ -98,6 +104,101 @@ async function updateRealTimeValues() {
   
   // 10. Almacenar datos para historial
   storeDataPoint(data.corriente, data.voltaje, power);
+  
+  // 11. Actualizar estado del relé
+  updateReleStatus();
+}
+
+// Función para actualizar el estado del relé
+async function updateReleStatus() {
+  if (typeof window.ESP32API === 'undefined' || !isMonitoring) return;
+  
+  const result = await window.ESP32API.getReleStatus();
+  
+  if (result.success) {
+    releState.encendido = result.data.encendido;
+    updateReleUI(result.data.encendido);
+  }
+}
+
+// Función para actualizar la UI del relé
+function updateReleUI(encendido) {
+  const button = document.getElementById('toggle-rele-btn');
+  const statusText = document.getElementById('rele-status-text');
+  const icon = document.getElementById('rele-icon');
+  
+  if (button) {
+    button.disabled = false;
+    
+    if (encendido) {
+      button.style.background = '#ef4444'; // Rojo para apagar
+      button.innerHTML = `
+        <span class="material-symbols-outlined text-white text-[20px]">power_settings_new</span>
+        <span>Apagar</span>
+      `;
+    } else {
+      button.style.background = '#10b981'; // Verde para encender
+      button.innerHTML = `
+        <span class="material-symbols-outlined text-white text-[20px]">power_settings_new</span>
+        <span>Encender</span>
+      `;
+    }
+  }
+  
+  if (statusText) {
+    statusText.textContent = `Estado: ${encendido ? 'Encendido' : 'Apagado'}`;
+    statusText.style.color = encendido ? '#10b981' : '#6b7280';
+  }
+  
+  if (icon) {
+    icon.style.color = encendido ? '#10b981' : '#6b7280';
+  }
+}
+
+// Función para toggle del relé
+async function toggleReleState() {
+  if (releState.updating) return; // Evitar múltiples clics
+  
+  releState.updating = true;
+  const button = document.getElementById('toggle-rele-btn');
+  
+  if (button) {
+    button.disabled = true;
+    button.innerHTML = `
+      <span class="material-symbols-outlined text-white text-[20px]">hourglass_empty</span>
+      <span>Procesando...</span>
+    `;
+  }
+  
+  try {
+    const result = await window.ESP32API.toggleRele();
+    
+    if (result.success) {
+      releState.encendido = result.data.encendido;
+      updateReleUI(result.data.encendido);
+      
+      const action = result.data.encendido ? 'encendido' : 'apagado';
+      showNotification('Relé Actualizado', `El relé ha sido ${action}`, 'success');
+    } else {
+      showNotification('Error', 'No se pudo cambiar el estado del relé', 'danger');
+      
+      // Restaurar botón
+      if (button) {
+        button.disabled = false;
+        updateReleUI(releState.encendido);
+      }
+    }
+  } catch (error) {
+    showNotification('Error', 'Error al comunicarse con el ESP32', 'danger');
+    
+    // Restaurar botón
+    if (button) {
+      button.disabled = false;
+      updateReleUI(releState.encendido);
+    }
+  } finally {
+    releState.updating = false;
+  }
 }
 
 // Función para actualizar el estado de conexión en la UI
@@ -620,6 +721,12 @@ document.addEventListener('DOMContentLoaded', function() {
   const testConnBtn = document.getElementById('test-connection-btn');
   if (testConnBtn) {
     testConnBtn.addEventListener('click', testConnectionFromMainButton);
+  }
+  
+  // Event listener para toggle del relé
+  const toggleReleBtn = document.getElementById('toggle-rele-btn');
+  if (toggleReleBtn) {
+    toggleReleBtn.addEventListener('click', toggleReleState);
   }
   
   // Permitir guardar con Enter en el input
