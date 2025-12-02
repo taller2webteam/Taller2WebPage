@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test ESP32 Conexión</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            color: #1f2937;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        p {
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            color: #374151;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 16px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5568d3;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #10b981;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #059669;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+        
+        .results {
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .results.show {
+            display: block;
+        }
+        
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 16px;
+            border-radius: 8px;
+        }
+        
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status.error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .status-icon {
+            font-size: 24px;
+        }
+        
+        .data-section {
+            margin-top: 20px;
+        }
+        
+        .data-title {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+        
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+        }
+        
+        .data-item {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .data-label {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+        
+        .data-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin-top: 12px;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔌 Test de Conexión ESP32</h1>
+        <p>Verifica la conexión con tu dispositivo ESP32 IoT</p>
+        
+        <div class="input-group">
+            <label for="esp32-ip">Dirección IP de tu ESP32:</label>
+            <input type="text" id="esp32-ip" placeholder="192.168.1.100" value="192.168.1.100">
+        </div>
+        
+        <div class="btn-group">
+            <button class="btn-primary" onclick="testSensores()">Test /sensores</button>
+            <button class="btn-secondary" onclick="testStatus()">Test /status</button>
+        </div>
+        
+        <button class="btn-primary" style="width: 100%;" onclick="testAll()">Probar Todos los Endpoints</button>
+        
+        <div class="results" id="results">
+            <!-- Los resultados se mostrarán aquí -->
+        </div>
+    </div>
+    
+    <script>
+        async function fetchWithTimeout(url, timeout = 5000) {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), timeout);
+            
+            try {
+                const response = await fetch(url, {
+                    signal: controller.signal,
+                    mode: 'cors'
+                });
+                clearTimeout(timeoutId);
+                return response;
+            } catch (error) {
+                clearTimeout(timeoutId);
+                throw error;
+            }
+        }
+        
+        function getIP() {
+            return document.getElementById('esp32-ip').value.trim();
+        }
+        
+        function showResults(content) {
+            const results = document.getElementById('results');
+            results.innerHTML = content;
+            results.classList.add('show');
+        }
+        
+        function showLoading() {
+            showResults(`
+                <div class="status">
+                    <div class="loading"></div>
+                    <div>
+                        <strong>Conectando...</strong><br>
+                        <small>Esperando respuesta de la ESP32</small>
+                    </div>
+                </div>
+            `);
+        }
+        
+        async function testSensores() {
+            showLoading();
+            const ip = getIP();
+            
+            try {
+                const response = await fetchWithTimeout(`http://${ip}/sensores`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const data = await response.json();
+                
+                showResults(`
+                    <div class="status success">
+                        <span class="status-icon">✅</span>
+                        <div>
+                            <strong>Conexión Exitosa</strong><br>
+                            <small>Endpoint /sensores funcionando correctamente</small>
+                        </div>
+                    </div>
+                    
+                    <div class="data-section">
+                        <div class="data-title">📊 Datos del Sensor ACS712</div>
+                        <div class="data-grid">
+                            <div class="data-item">
+                                <div class="data-label">Corriente</div>
+                                <div class="data-value">${data.acs712.corriente.toFixed(2)} A</div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Voltaje</div>
+                                <div class="data-value">${data.acs712.voltaje.toFixed(2)} V</div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">ADC</div>
+                                <div class="data-value">${data.acs712.adc}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-section">
+                        <div class="data-title">🔥 Datos del Sensor de Flama</div>
+                        <div class="data-grid">
+                            <div class="data-item">
+                                <div class="data-label">Estado</div>
+                                <div class="data-value">${data.flama.estado}</div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Detectada</div>
+                                <div class="data-value">${data.flama.detectada ? 'SÍ' : 'NO'}</div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Valor Analógico</div>
+                                <div class="data-value">${data.flama.analog}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-section">
+                        <div class="data-title">📄 JSON Completo</div>
+                        <div class="code-block">${JSON.stringify(data, null, 2)}</div>
+                    </div>
+                `);
+            } catch (error) {
+                showResults(`
+                    <div class="status error">
+                        <span class="status-icon">❌</span>
+                        <div>
+                            <strong>Error de Conexión</strong><br>
+                            <small>${error.message}</small>
+                        </div>
+                    </div>
+                    <p style="margin-top: 16px; color: #6b7280;">
+                        <strong>Posibles causas:</strong><br>
+                        • Verifica que la IP sea correcta<br>
+                        • Asegúrate de que la ESP32 esté encendida<br>
+                        • Confirma que estés en la misma red WiFi<br>
+                        • Intenta acceder directamente a http://${ip}/sensores en tu navegador
+                    </p>
+                `);
+            }
+        }
+        
+        async function testStatus() {
+            showLoading();
+            const ip = getIP();
+            
+            try {
+                const response = await fetchWithTimeout(`http://${ip}/status`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const data = await response.json();
+                
+                const uptimeSeconds = Math.floor(data.uptime / 1000);
+                const hours = Math.floor(uptimeSeconds / 3600);
+                const minutes = Math.floor((uptimeSeconds % 3600) / 60);
+                const seconds = uptimeSeconds % 60;
+                
+                showResults(`
+                    <div class="status success">
+                        <span class="status-icon">✅</span>
+                        <div>
+                            <strong>Conexión Exitosa</strong><br>
+                            <small>Endpoint /status funcionando correctamente</small>
+                        </div>
+                    </div>
+                    
+                    <div class="data-section">
+                        <div class="data-title">💻 Estado del Sistema ESP32</div>
+                        <div class="data-grid">
+                            <div class="data-item">
+                                <div class="data-label">IP</div>
+                                <div class="data-value" style="font-size: 16px;">${data.ip}</div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Red WiFi</div>
+                                <div class="data-value" style="font-size: 16px;">${data.ssid}</div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Señal WiFi</div>
+                                <div class="data-value">${data.rssi} dBm</div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Uptime</div>
+                                <div class="data-value" style="font-size: 14px;">${hours}h ${minutes}m ${seconds}s</div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Memoria Libre</div>
+                                <div class="data-value">${(data.freeHeap / 1024).toFixed(1)} KB</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="data-section">
+                        <div class="data-title">📄 JSON Completo</div>
+                        <div class="code-block">${JSON.stringify(data, null, 2)}</div>
+                    </div>
+                `);
+            } catch (error) {
+                showResults(`
+                    <div class="status error">
+                        <span class="status-icon">❌</span>
+                        <div>
+                            <strong>Error de Conexión</strong><br>
+                            <small>${error.message}</small>
+                        </div>
+                    </div>
+                `);
+            }
+        }
+        
+        async function testAll() {
+            showLoading();
+            const ip = getIP();
+            const endpoints = ['/sensores', '/corriente', '/flama', '/status'];
+            const results = [];
+            
+            for (const endpoint of endpoints) {
+                try {
+                    const response = await fetchWithTimeout(`http://${ip}${endpoint}`);
+                    const data = await response.json();
+                    results.push({
+                        endpoint,
+                        success: true,
+                        data
+                    });
+                } catch (error) {
+                    results.push({
+                        endpoint,
+                        success: false,
+                        error: error.message
+                    });
+                }
+            }
+            
+            const allSuccess = results.every(r => r.success);
+            const successCount = results.filter(r => r.success).length;
+            
+            let html = `
+                <div class="status ${allSuccess ? 'success' : 'error'}">
+                    <span class="status-icon">${allSuccess ? '✅' : '⚠️'}</span>
+                    <div>
+                        <strong>${successCount}/${endpoints.length} Endpoints Funcionando</strong><br>
+                        <small>${allSuccess ? 'Todos los endpoints responden correctamente' : 'Algunos endpoints tienen problemas'}</small>
+                    </div>
+                </div>
+            `;
+            
+            results.forEach(result => {
+                html += `
+                    <div class="data-section">
+                        <div class="data-title">${result.success ? '✅' : '❌'} ${result.endpoint}</div>
+                        ${result.success 
+                            ? `<div class="code-block">${JSON.stringify(result.data, null, 2)}</div>`
+                            : `<p style="color: #991b1b;">Error: ${result.error}</p>`
+                        }
+                    </div>
+                `;
+            });
+            
+            showResults(html);
+        }
+    </script>
+</body>
+</html>
+

@@ -56,93 +56,28 @@
 </aside>
 <main>
 <div class="container">
-<h2 class="section-title">Consumo de Luz</h2>
+<h2 class="section-title">Consumo de Luz - ESP32 IoT Device</h2>
+<p class="text-gray-600 dark:text-gray-300 mb-6">Consumo calculado en base a las mediciones del sensor ACS712</p>
 <div class="grid">
 <div class="card">
-<p>Resumen mensual</p>
-<p><strong>1,204 kWh</strong> este mes</p>
-<p>Variación: <strong>+2.5%</strong></p>
+<p class="text-gray-600 dark:text-white">Consumo Diario Estimado</p>
+<p id="daily-consumption"><strong>-- kWh</strong></p>
+<p class="text-sm text-gray-500">Basado en uso 24/7</p>
 </div>
 <div class="card">
-<p>Costo estimado</p>
-<p><strong>$ 180.40</strong></p>
-<p>Tarifa aplicada: <strong>Residencial A</strong></p>
-</div>
-</div>
-</div>
-<div class="container">
-<div class="grid">
-<div class="card">
-<div class="row-between">
-<div>
-<p>Consumo de Energía - Últimas 24 Horas</p>
-<div class="summary">
-<p><strong>850 kWh</strong></p>
-<p style="color:#0bda5b"><strong>+4.2%</strong></p>
-</div>
-</div>
-<button class="icon-btn" aria-label="Más opciones">
-<span class="material-symbols-outlined">more_vert</span>
-</button>
-</div>
-<div class="chart-area">
-<svg fill="none" height="100%" preserveAspectRatio="none" viewBox="0 0 472 150" width="100%" xmlns="http://www.w3.org/2000/svg">
-<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V149H0V109Z" fill="url(#paint0_linear_chart)"></path>
-<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25" stroke="#137fec" stroke-linecap="round" stroke-width="3"></path>
-<defs>
-<linearGradient gradientUnits="userSpaceOnUse" id="paint0_linear_chart" x1="236" x2="236" y1="1" y2="149">
-<stop stop-color="#137fec" stop-opacity="0.3"></stop>
-<stop offset="1" stop-color="#137fec" stop-opacity="0"></stop>
-</linearGradient>
-</defs>
-</svg>
-<div class="row-split">
-<p style="color:#6b7280;font-weight:700">00:00</p>
-<p style="color:#6b7280;font-weight:700">04:00</p>
-<p style="color:#6b7280;font-weight:700">08:00</p>
-<p style="color:#6b7280;font-weight:700">12:00</p>
-<p style="color:#6b7280;font-weight:700">16:00</p>
-<p style="color:#6b7280;font-weight:700">20:00</p>
-<p style="color:#6b7280;font-weight:700">23:59</p>
-</div>
-</div>
+<p class="text-gray-600 dark:text-white">Consumo Mensual Estimado</p>
+<p id="monthly-consumption"><strong>-- kWh</strong></p>
+<p class="text-sm text-gray-500">Basado en uso 24/7</p>
 </div>
 <div class="card">
-<div class="row-between">
-<p>Consumo por día - Últimos 7 días</p>
-<p><strong>3,920 kWh</strong></p>
+<p class="text-gray-600 dark:text-white">Costo Mensual Estimado</p>
+<p id="monthly-cost"><strong>$ --</strong></p>
+<p class="text-sm text-gray-500">Tarifa: $3.20/kWh</p>
 </div>
-<div class="chart-area">
-<svg viewBox="0 0 500 200" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-<g fill="#dbeafe">
-<rect x="20" y="120" width="40" height="60" rx="6"></rect>
-<rect x="90" y="90" width="40" height="90" rx="6"></rect>
-<rect x="160" y="70" width="40" height="110" rx="6"></rect>
-<rect x="230" y="100" width="40" height="80" rx="6"></rect>
-<rect x="300" y="50" width="40" height="130" rx="6"></rect>
-<rect x="370" y="80" width="40" height="100" rx="6"></rect>
-<rect x="440" y="110" width="40" height="70" rx="6"></rect>
-</g>
-<g fill="#137fec">
-<rect x="20" y="130" width="40" height="50" rx="6"></rect>
-<rect x="90" y="110" width="40" height="70" rx="6"></rect>
-<rect x="160" y="90" width="40" height="90" rx="6"></rect>
-<rect x="230" y="120" width="40" height="60" rx="6"></rect>
-<rect x="300" y="70" width="40" height="110" rx="6"></rect>
-<rect x="370" y="100" width="40" height="80" rx="6"></rect>
-<rect x="440" y="130" width="40" height="50" rx="6"></rect>
-</g>
-</svg>
-<div class="row-split">
-<p style="color:#6b7280;font-weight:700">Lun</p>
-<p style="color:#6b7280;font-weight:700">Mar</p>
-<p style="color:#6b7280;font-weight:700">Mié</p>
-<p style="color:#6b7280;font-weight:700">Jue</p>
-<p style="color:#6b7280;font-weight:700">Vie</p>
-<p style="color:#6b7280;font-weight:700">Sáb</p>
-<p style="color:#6b7280;font-weight:700">Dom</p>
-</div>
-</div>
+<div class="card">
+<p class="text-gray-600 dark:text-white">Potencia Actual</p>
+<p id="current-power"><strong>-- W</strong></p>
+<p class="text-sm text-gray-500" id="power-status">Esperando datos...</p>
 </div>
 </div>
 </div>
@@ -192,6 +127,12 @@ document.addEventListener('DOMContentLoaded', function() {
     </button>
   </div>
 </div>
+
+<!-- ESP32 API Client -->
+<script src="assets/js/esp32-api.js"></script>
+
+<!-- Consumo Monitor -->
+<script src="assets/js/consumo-monitor.js"></script>
 
 <!-- Chat Configuration & Script -->
 <script src="assets/js/chat-config.js"></script>
