@@ -6,8 +6,13 @@
 let esp32Config = {
   ip: localStorage.getItem('esp32_ip') || '192.168.1.100', // IP por defecto
   updateInterval: 2000, // 2 segundos
-  timeout: 5000 // 5 segundos timeout
+  timeout: 5000, // 5 segundos timeout
+  simulatedVoltage: parseFloat(localStorage.getItem('esp32_simulated_voltage')) || 120, // Voltaje base simulado para uso doméstico (120V México/USA, cambia a 220V si es necesario)
+  voltageVariation: 4 // Variación del voltaje ±4V (ej: 120V varía entre 116V y 124V)
 };
+
+// Variable para almacenar el último voltaje generado (para transiciones suaves)
+let lastGeneratedVoltage = null;
 
 // Estado de la conexión
 let connectionState = {
@@ -16,6 +21,47 @@ let connectionState = {
   errorCount: 0,
   maxErrors: 3
 };
+
+// ============================================
+// FUNCIONES AUXILIARES
+// ============================================
+
+/**
+ * Genera un voltaje simulado con variación realista
+ * El voltaje varía de forma suave usando cambios pequeños entre lecturas
+ */
+function generateRealisticVoltage() {
+  const baseVoltage = esp32Config.simulatedVoltage;
+  const variation = esp32Config.voltageVariation;
+  
+  // Si es la primera vez, generar un valor inicial
+  if (lastGeneratedVoltage === null) {
+    lastGeneratedVoltage = baseVoltage;
+  }
+  
+  // Generar un cambio pequeño suave (máximo ±0.5V por lectura)
+  const maxChange = 0.5;
+  const change = (Math.random() - 0.5) * 2 * maxChange;
+  
+  // Aplicar el cambio al último voltaje
+  let newVoltage = lastGeneratedVoltage + change;
+  
+  // Asegurar que esté dentro del rango permitido (base ± variation)
+  const minVoltage = baseVoltage - variation;
+  const maxVoltage = baseVoltage + variation;
+  
+  // Limitar el voltaje al rango permitido
+  if (newVoltage < minVoltage) {
+    newVoltage = minVoltage + Math.random() * 0.5;
+  } else if (newVoltage > maxVoltage) {
+    newVoltage = maxVoltage - Math.random() * 0.5;
+  }
+  
+  // Guardar para la próxima lectura
+  lastGeneratedVoltage = newVoltage;
+  
+  return newVoltage;
+}
 
 // ============================================
 // FUNCIONES PARA CONSUMIR ENDPOINTS
@@ -55,17 +101,22 @@ async function getSensoresData() {
     connectionState.lastUpdate = Date.now();
     connectionState.errorCount = 0;
     
+    // Generar voltaje simulado con variación realista
+    const voltajeSimulado = generateRealisticVoltage();
+    
     return {
       success: true,
       data: {
         corriente: data.acs712.corriente,
-        voltaje: data.acs712.voltaje,
+        voltaje: voltajeSimulado, // Voltaje simulado con variación ±4V
+        voltajeOriginal: data.acs712.voltaje, // Guardar el valor original por si acaso
         adc: data.acs712.adc,
         flamaAnalog: data.flama.analog,
         flamaDetectada: data.flama.detectada,
         flamaEstado: data.flama.estado,
         timestamp: data.timestamp,
-        uptime: data.uptime_ms
+        uptime: data.uptime_ms,
+        voltajeEsSimulado: true // Flag para indicar que el voltaje es simulado
       }
     };
   } catch (error) {
@@ -92,13 +143,19 @@ async function getCorrienteData() {
     connectionState.lastUpdate = Date.now();
     connectionState.errorCount = 0;
     
+    // Usar voltaje simulado ya que el sensor está dañado
+    const voltajeSimulado = esp32Config.simulatedVoltage;
+    const potenciaRecalculada = Math.abs(data.corriente) * voltajeSimulado;
+    
     return {
       success: true,
       data: {
         corriente: data.corriente,
-        voltaje: data.voltaje,
-        potencia: data.potencia_estimada,
-        timestamp: data.timestamp
+        voltaje: voltajeSimulado, // Voltaje simulado
+        voltajeOriginal: data.voltaje, // Guardar el valor original
+        potencia: potenciaRecalculada, // Recalcular con voltaje simulado
+        timestamp: data.timestamp,
+        voltajeEsSimulado: true
       }
     };
   } catch (error) {
@@ -190,6 +247,22 @@ function getESP32IP() {
 }
 
 /**
+ * Configurar voltaje simulado (para cuando el sensor de voltaje está dañado)
+ */
+function setSimulatedVoltage(voltage) {
+  esp32Config.simulatedVoltage = voltage;
+  localStorage.setItem('esp32_simulated_voltage', voltage);
+  console.log(`Voltaje simulado actualizado a: ${voltage}V`);
+}
+
+/**
+ * Obtener el voltaje simulado configurado
+ */
+function getSimulatedVoltage() {
+  return esp32Config.simulatedVoltage;
+}
+
+/**
  * Obtener estado de conexión
  */
 function getConnectionState() {
@@ -223,6 +296,8 @@ if (typeof window !== 'undefined') {
     // Funciones de configuración
     setESP32IP,
     getESP32IP,
+    setSimulatedVoltage,
+    getSimulatedVoltage,
     getConnectionState,
     resetErrorCount,
     

@@ -631,20 +631,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
-  
-  // Agregar botón de configuración si no existe (para el diálogo modal)
-  const filterBar = document.querySelector('.filter-bar .filters');
-  if (filterBar && !document.getElementById('config-esp32-btn')) {
-    const configButton = document.createElement('button');
-    configButton.id = 'config-esp32-btn';
-    configButton.className = 'btn';
-    configButton.innerHTML = `
-      <span class="material-symbols-outlined text-[20px]">settings</span>
-      <span>Configurar ESP32</span>
-    `;
-    configButton.addEventListener('click', showIPConfigDialog);
-    filterBar.appendChild(configButton);
-  }
 });
 
 // Limpiar al salir de la página
